@@ -1,8 +1,10 @@
 
 #include <iostream>
+#include <math.h>
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <functional>
 
 using namespace std;
 
@@ -169,6 +171,22 @@ bool decreasingComparator(const Student &s1, const Student &s2) {
     return (s1.getID() > s2.getID());
 }
 
+double integrate(double start, double end, function<double(double)> f) {
+
+    int intervals = 5;
+    double totalArea = 0;
+    double nextX = start;
+    double deltaX = (end - start) / intervals;
+    for (int i=0; i<intervals; i++) {
+        double h1 = f(nextX);
+        double h2 = f(nextX + deltaX);
+        double nextArea = ((h1 + h2) / 2) * deltaX;
+        totalArea += nextArea;
+        nextX += deltaX;
+    }
+    return totalArea;
+}
+
 int main() {
 
     Student s1(1, "Ana", 19, 4.0);
@@ -205,6 +223,10 @@ int main() {
 
     int honorStudentCount = count_if(allReversed.begin(), allReversed.end(),
                                      [](const Student &s) { return s.getGPA() >= 3.0; });
+
+    cout << "Integral of x^2 from 0 to 1 is: " << integrate(0,1,[](double x){ return x*x;}) << endl;;
+
+    cout << "Integral of e^x from 0 to 1 is: " << integrate(-M_PI/2,M_PI/2,[](double x){ return cos(x);}) << endl;
 
     exit(0);
 }
