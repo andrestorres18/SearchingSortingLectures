@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -21,16 +22,16 @@ public:
         this->gpa = gpa;
     }
     int getID() const { return id; }
-    string getName() { return name; }
-    int getAge() { return age; }
-    float getGPA() { return gpa; }
+    string getName() const { return name; }
+    int getAge() const { return age; }
+    float getGPA() const { return gpa; }
 
     void setName(string name) { this->name = name; }
     void setAge(int age) { this->age = age; }
     void setGPA(float gpa) { this->gpa = gpa; }
 
-    bool operator==(const Student &s) { return this->getID() == s.getID(); }
-    bool operator<(const Student &s) { return this->getID() < s.getID(); }
+    bool operator==(const Student &s) const { return this->getID() == s.getID(); }
+    bool operator<(const Student &s) const { return this->getID() < s.getID(); }
 
     static int linearSearch(vector<Student> students, Student key);
     static int binarySearch(vector<Student> students, Student key);
@@ -160,6 +161,14 @@ int Student::mergeSort(vector<Student> &students) {
     return comparisons;
 }
 
+bool increasingComparator(const Student &s1, const Student &s2) {
+    return (s1.getID() < s2.getID());
+}
+
+bool decreasingComparator(const Student &s1, const Student &s2) {
+    return (s1.getID() > s2.getID());
+}
+
 int main() {
 
     Student s1(1, "Ana", 19, 4.0);
@@ -182,7 +191,20 @@ int main() {
     cout << "Position for Maria among males: " << Student::binarySearch(maleStudents, key) << endl;
 
     //cout << "Total comparisons for insertionSort on allReversed: " << Student::insertionSort(allReversed);
-    cout << "Total comparisons for mergeSort on allReversed: " << Student::mergeSort(allReversed);
+    //cout << "Total comparisons for mergeSort on allReversed: " << Student::mergeSort(allReversed);
+
+    sort(allReversed.begin(), allReversed.end());
+
+    sort(allReversed.begin(), allReversed.end(), decreasingComparator);
+
+    // Using a lambda expression
+    sort(allReversed.begin(), allReversed.end(),
+         [](const Student &s1, const Student &s2) {
+             return s1.getID() < s2.getID();
+         });
+
+    int honorStudentCount = count_if(allReversed.begin(), allReversed.end(),
+                                     [](const Student &s) { return s.getGPA() >= 3.0; });
 
     exit(0);
 }
