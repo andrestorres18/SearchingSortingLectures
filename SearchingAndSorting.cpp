@@ -221,10 +221,11 @@ int main() {
              return s1.getID() < s2.getID();
          });
 
+    
     int honorStudentCount = count_if(allReversed.begin(), allReversed.end(),
                                      [](const Student &s) { return s.getGPA() >= 3.0; });
 
-    cout << "Integral of x^2 from 0 to 1 is: " << integrate(0,1,[](double x){ return x*x;}) << endl;;
+    cout << "Integral of x^2 from 0 to 1 is: " << integrate(0,1,`) << endl;;
 
     cout << "Integral of e^x from 0 to 1 is: " << integrate(-M_PI/2,M_PI/2,[](double x){ return cos(x);}) << endl;
 
