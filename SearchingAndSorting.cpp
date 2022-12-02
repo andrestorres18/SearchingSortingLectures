@@ -98,7 +98,7 @@ int Student::insertionSort(vector<Student> &students) {
     for (int i=1; i<students.size(); i++) {
 
         int j = i;
-        // while ((j > 0) &&                                                                        ) {
+        // while ((j > 0) && (students[j]<students[j-1])) {
         //     comparisons++;
         //     Student temp = students[j];
         //     students[j] = students[j-1];
